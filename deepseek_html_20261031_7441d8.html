@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight 6 — Simple Present vs Present Progressive (Audio Lab A2)</title>
+<style>
+  :root{
+    --navy:#0b1f3a; --navy2:#122a4d; --sky:#1ea7e8; --amber:#f5a623;
+    --green:#28c76f; --red:#ea5455; --purple:#8e6ef2;
+    --ink:#122036; --paper:#f4f8fc; --card:#ffffff; --muted:#6b7c93;
+    --radius:16px; --shadow:0 8px 24px rgba(11,31,58,0.12);
+    font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);}
+  body{min-height:100vh;}
+  header.topbar{
+    background:linear-gradient(135deg,var(--navy) 0%, var(--navy2) 100%);
+    color:#fff;padding:16px 18px 12px;position:sticky;top:0;z-index:50;
+    box-shadow:0 4px 18px rgba(0,0,0,.25);
+  }
+  .topbar-inner{max-width:1150px;margin:0 auto;}
+  .badge{
+    display:inline-block;background:var(--sky);color:#fff;font-size:11px;font-weight:700;
+    letter-spacing:1px;padding:5px 12px;border-radius:20px;text-transform:uppercase;margin-bottom:8px;
+  }
+  header.topbar h1{margin:0 0 4px;font-size:clamp(18px,3.6vw,26px);}
+  header.topbar p{margin:0 0 12px;color:#b9c8de;font-size:13px;}
+  nav.phasenav{display:flex;gap:6px;flex-wrap:wrap;}
+  nav.phasenav button{
+    flex:1 1 90px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+    color:#dce6f5;padding:8px 6px;border-radius:10px;font-size:10.5px;font-weight:600;cursor:pointer;
+    transition:.2s;text-align:center;
+  }
+  nav.phasenav button .num{display:block;font-size:9px;font-weight:800;color:var(--amber);letter-spacing:1px;margin-bottom:2px;}
+  nav.phasenav button.active{background:var(--sky);border-color:var(--sky);color:#fff;}
+  nav.phasenav button:hover:not(.active){background:rgba(255,255,255,0.16);}
+  .progress-outer{height:6px;background:rgba(255,255,255,0.15);border-radius:6px;margin-top:10px;overflow:hidden;}
+  .progress-inner{height:100%;width:0%;background:linear-gradient(90deg,var(--sky),var(--amber));transition:width .4s ease;}
+  main{max-width:1150px;margin:0 auto;padding:26px 18px 70px;}
+  .phase{display:none;animation:fadeIn .4s ease;}
+  .phase.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .phase-title{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .phase-title .bar{width:5px;height:26px;background:var(--sky);border-radius:3px;}
+  .phase-title h2{margin:0;font-size:clamp(19px,3.2vw,25px);}
+  .phase-sub{color:var(--muted);margin:0 0 22px;font-size:14.5px;max-width:760px;}
+  .lab-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px 22px;margin-bottom:20px;}
+  .audio-player-box{
+    background:#eef4fb;border-left:5px solid var(--sky);padding:16px 20px;border-radius:10px;
+    display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap;
+  }
+  .audio-btn-group{display:flex;gap:8px;flex-shrink:0;}
+  .audio-btn{
+    width:44px;height:44px;border-radius:50%;color:#fff;border:none;
+    font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:.2s;box-shadow:0 4px 12px rgba(11,31,58,0.15);
+  }
+  .audio-btn:hover{transform:scale(1.08);}
+  .audio-btn.play-btn{background:var(--sky);}
+  .audio-btn.play-btn:hover{background:var(--navy);}
+  .audio-btn.pause-btn{background:var(--amber);}
+  .audio-btn.pause-btn:hover{background:var(--red);}
+  .audio-btn.small{width:36px;height:36px;font-size:14px;}
+  .audio-info{flex:1;min-width:150px;}
+  .audio-info h4{margin:0 0 4px;font-size:15px;color:var(--navy);}
+  .audio-info p{margin:0;font-size:12.5px;color:var(--muted);}
+  .question-block{margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #eef4fb;}
+  .question-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .q-text{font-size:15.5px;font-weight:700;color:var(--ink);margin-bottom:12px;}
+  .opt-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+  .opt-btn{
+    background:#f7fafd;border:2px solid #e2ebf3;border-radius:12px;padding:12px 16px;
+    font-size:14px;font-weight:600;color:var(--ink);text-align:left;cursor:pointer;transition:.15s;
+    display:flex;align-items:center;gap:10px;
+  }
+  .opt-btn:hover{border-color:var(--sky);background:#fff;}
+  .opt-btn.correct{background:#e8f9ee;border-color:var(--green);color:#1c8a4d;}
+  .opt-btn.wrong{background:#fdecec;border-color:var(--red);color:#c53030;}
+  .opt-btn:disabled{opacity:0.6;cursor:not-allowed;}
+  .complete-item{margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #eef4fb;}
+  .complete-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .complete-sentence{font-size:17px;font-weight:700;color:var(--navy);margin:12px 0;line-height:2.2;}
+  .blank-input{
+    display:inline-block;min-width:140px;padding:6px 10px;border:2px dashed var(--sky);
+    border-radius:6px;font-size:15px;font-weight:700;color:var(--ink);
+    background:#fff;outline:none;text-align:center;margin:0 4px;
+  }
+  .blank-input:focus{border-color:var(--navy);border-style:solid;}
+  .blank-input.correct{border-color:var(--green);border-style:solid;background:#e8f9ee;color:#1c8a4d;}
+  .blank-input.wrong{border-color:var(--red);border-style:solid;background:#fdecec;color:#c53030;}
+  .blank-input:disabled{opacity:0.75;}
+  .type-badge{
+    display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:20px;
+    margin-left:6px;letter-spacing:.5px;text-transform:uppercase;
+  }
+  .type-badge.simple{background:#e8f0fe;color:#1a73e8;}
+  .type-badge.prog{background:#fce8e6;color:#ea5455;}
+  .complete-check-btn{
+    background:var(--sky);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:700;
+    cursor:pointer;font-size:13.5px;transition:.2s;margin-top:10px;
+  }
+  .complete-check-btn:hover{background:var(--navy);}
+  .complete-check-btn:disabled{opacity:0.5;cursor:not-allowed;}
+  .complete-feedback{font-size:13px;font-weight:700;margin-top:8px;min-height:18px;}
+  .complete-feedback.ok{color:var(--green);}
+  .complete-feedback.no{color:var(--red);}
+  .open-answer-input{
+    width:100%;min-height:80px;padding:12px;border-radius:10px;border:2px solid #e2ebf3;
+    font-size:14px;font-family:inherit;font-weight:600;color:var(--ink);outline:none;
+    resize:vertical;margin-top:8px;
+  }
+  .open-answer-input:focus{border-color:var(--sky);}
+  .open-answer-input:disabled{opacity:0.6;background:#f7fafd;}
+  .open-answer-input.correct{border-color:var(--green);background:#e8f9ee;}
+  .open-answer-input.wrong{border-color:var(--red);background:#fdecec;}
+  .open-check-btn{
+    background:var(--purple);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:700;
+    cursor:pointer;font-size:13.5px;transition:.2s;margin-top:10px;
+  }
+  .open-check-btn:hover{background:var(--navy);}
+  .open-check-btn:disabled{opacity:0.5;cursor:not-allowed;}
+  .attempt-tag{
+    display:inline-block;font-size:11px;font-weight:800;color:var(--amber);background:#fff2da;
+    padding:3px 9px;border-radius:20px;margin-left:8px;letter-spacing:.5px;
+  }
+  .attempt-tag.maxed{color:var(--red);background:#fdecec;font-weight:900;}
+  .retry-note{
+    background:#fff6e6;border-left:5px solid var(--amber);padding:12px 16px;border-radius:10px;
+    font-size:13px;color:#7a5300;margin-bottom:20px;
+  }
+  .final-wrap{max-width:750px;margin:0 auto;text-align:center;}
+  .final-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:40px 26px;}
+  .medal{font-size:80px;margin-bottom:6px;}
+  .final-card h3{font-size:26px;color:var(--navy);margin:0 0 4px;}
+  .final-card .medal-label{font-weight:800;color:var(--amber);text-transform:uppercase;letter-spacing:1px;font-size:13px;margin-bottom:18px;}
+  .final-score-big{font-size:52px;font-weight:900;color:var(--sky);margin-bottom:4px;}
+  .final-score-sub{color:var(--muted);font-size:13px;margin-bottom:26px;}
+  .final-breakdown{display:flex;flex-direction:column;gap:12px;text-align:left;margin-bottom:26px;}
+  .fb-row{display:flex;align-items:center;gap:12px;}
+  .fb-row .fb-label{width:210px;font-size:13px;font-weight:700;color:var(--ink);flex-shrink:0;}
+  .fb-row .fb-bar-outer{flex:1;height:10px;background:#e2ebf3;border-radius:6px;overflow:hidden;}
+  .fb-row .fb-bar-inner{height:100%;background:linear-gradient(90deg,var(--sky),var(--green));border-radius:6px;}
+  .fb-row .fb-val{width:60px;text-align:right;font-size:12.5px;font-weight:800;color:var(--muted);}
+  .restart-btn{background:var(--amber);border:none;color:#3a2600;padding:13px 26px;border-radius:10px;font-weight:800;cursor:pointer;font-size:14.5px;}
+  .restart-btn:hover{background:var(--sky);color:#fff;}
+  .result-box{margin-top:20px;padding:20px;border-radius:12px;font-weight:700;font-size:18px;}
+  .result-box.pass{background:#e8f9ee;color:var(--green);border:2px solid var(--green);}
+  .result-box.fail{background:#fdecec;color:var(--red);border:2px solid var(--red);}
+  footer.bottom{text-align:center;color:var(--muted);font-size:12px;padding:20px;}
+  footer.bottom span{color:var(--sky);font-weight:700;}
+  @media(max-width:640px){
+    nav.phasenav{gap:5px;}
+    nav.phasenav button{font-size:10px;padding:7px 4px;}
+    .fb-row .fb-label{width:130px;font-size:11px;}
+    .audio-player-box{gap:10px;}
+    .audio-btn-group{gap:5px;}
+    .audio-btn{width:38px;height:38px;font-size:15px;}
+    .blank-input{min-width:100px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="badge">Aviation English · Flight 6 · Audio Lab A2</span>
+    <h1>Flight 6 — Simple Present vs Present Progressive</h1>
+    <p>Routines &amp; Live Actions · Cabin &amp; Ramp Operations · 100% Listening · A2 Level</p>
+    <nav class="phasenav" id="phaseNav">
+      <button class="phase-btn active" data-phase="1"><span class="num">SECTION 1</span>Complete Word</button>
+      <button class="phase-btn" data-phase="2"><span class="num">SECTION 2</span>Listening Medium</button>
+      <button class="phase-btn" data-phase="3"><span class="num">SECTION 3</span>Listening Long</button>
+      <button class="phase-btn" data-phase="4"><span class="num">SECTION 4</span>Listening Drill</button>
+      <button class="phase-btn" data-phase="5"><span class="num">SECTION 5</span>Simple vs Progressive</button>
+      <button class="phase-btn" data-phase="6"><span class="num">SECTION 6</span>Maria's Story</button>
+      <button class="phase-btn" data-phase="7"><span class="num">SECTION 7</span>Roleplay</button>
+      <button class="phase-btn" data-phase="8"><span class="num">SECTION 8</span>Final Review</button>
+    </nav>
+    <div class="progress-outer"><div class="progress-inner" id="topProgress"></div></div>
+  </div>
+</header>
+
+<main>
+
+  <section class="phase active" id="phase1">
+    <div class="phase-title"><span class="bar"></span><h2>Section 1: Complete the Verb Form</h2></div>
+    <p class="phase-sub">Listen to each sentence and complete the missing verb. 3 attempts per sentence. Pay attention to the tense (Simple Present or Present Progressive).</p>
+    <div class="retry-note">💡 Escucha la oración completa y escribe SOLO el verbo que falta. Puede ser Simple Present (routine) o Present Progressive (live action).</div>
+    <div class="lab-card" id="completeArea"></div>
+  </section>
+
+  <section class="phase" id="phase2">
+    <div class="phase-title"><span class="bar"></span><h2>Section 2: Medium Listening — Cabin &amp; Ramp</h2></div>
+    <p class="phase-sub">Listen to two short transmissions and answer the questions. 3 attempts per question.</p>
+    <div id="listenMediumArea"></div>
+  </section>
+
+  <section class="phase" id="phase3">
+    <div class="phase-title"><span class="bar"></span><h2>Section 3: Long Listening — Ground Report</h2></div>
+    <p class="phase-sub">Listen to the operational report and answer the questions. 3 attempts per question.</p>
+    <div id="listenLongArea"></div>
+  </section>
+
+  <section class="phase" id="phase4">
+    <div class="phase-title"><span class="bar"></span><h2>Section 4: Listening Drill — Choose What You Heard</h2></div>
+    <p class="phase-sub">Listen carefully and choose the option that matches exactly what you heard. 3 attempts per question.</p>
+    <div class="retry-note">🎧 Solo verás las opciones. Debes escuchar el audio para identificar la frase correcta.</div>
+    <div class="lab-card" id="drillArea"></div>
+  </section>
+
+  <section class="phase" id="phase5">
+    <div class="phase-title"><span class="bar"></span><h2>Section 5: Simple Present vs Present Progressive</h2></div>
+    <p class="phase-sub">Listen to the sentence and choose whether it's a ROUTINE (Simple Present) or a LIVE ACTION (Present Progressive). 3 attempts per question.</p>
+    <div class="retry-note">🎧 Escucha la oración y elige el tiempo verbal correcto según el Signal Word (always / every flight / now / right now / look!).</div>
+    <div class="lab-card" id="goingToArea"></div>
+  </section>
+
+  <section class="phase" id="phase6">
+    <div class="phase-title"><span class="bar"></span><h2>Section 6: Maria's Story — Open Answers</h2></div>
+    <p class="phase-sub">Listen to Maria (a flight attendant) talking about her day. Then answer the comprehension questions in complete sentences. 3 attempts per question.</p>
+    <div class="retry-note">💡 Escucha la historia completa y responde con oraciones completas. Se evalúan las palabras clave (keywords).</div>
+    <div class="lab-card" id="storyArea"></div>
+  </section>
+
+  <section class="phase" id="phase7">
+    <div class="phase-title"><span class="bar"></span><h2>Section 7: Listening Roleplay — Choose the Correct Response</h2></div>
+    <p class="phase-sub">Listen to the question and select the correct response. 3 attempts per question.</p>
+    <div class="retry-note">🎧 Escucha la pregunta (no la verás escrita) y elige la respuesta correcta.</div>
+    <div class="lab-card" id="roleplayArea"></div>
+  </section>
+
+  <section class="phase" id="phase8">
+    <div class="phase-title"><span class="bar"></span><h2>Final Review &amp; Operational Summary</h2></div>
+    <p class="phase-sub">Comprehensive evaluation of your Flight 6 performance. Minimum 80% to pass.</p>
+    <div class="final-wrap" id="finalArea"></div>
+  </section>
+
+</main>
+
+<footer class="bottom">✈️ Flight 6 Complete · <span>Simple Present vs Present Progressive · Audio Lab A2</span></footer>
+
+<script>
+/* ============================================================
+   AUDIO SCRIPTS
+   ============================================================ */
+const AUDIOS = {
+  // Section 1 — Complete Verb Form
+  c1:  "The flight attendant always demonstrates the oxygen mask.",
+  c2:  "Look! The crew is closing the overhead bin now.",
+  c3:  "The passengers are sitting in their seats right now.",
+  c4:  "Mechanics check the engines every morning.",
+  c5:  "The purser is serving coffee in the galley at the moment.",
+  c6:  "Cabin crew usually serve cold drinks during flight.",
+  c7:  "Listen! The captain is speaking on the intercom.",
+  c8:  "Passengers always fasten their seatbelts during turbulence.",
+  c9:  "Right now, the mechanics are inspecting the life vests.",
+  c10: "The instructor teaches safety procedures every week.",
+  c11: "Look! The dispatchers are closing the cargo doors.",
+  c12: "Flight attendants speak English on international routes.",
+  c13: "The oxygen mask automatically drops during decompression.",
+  c14: "Currently, the crew is serving meals to passengers.",
+  c15: "Every flight, the crew checks the emergency exits.",
+
+  // Section 2 — Medium Listening
+  s2a: "Cabin announcement. Good morning, passengers. Our flight attendants always demonstrate the oxygen mask before takeoff. Right now, the crew is closing the overhead bins because we are ready for departure. Please fasten your seatbelts and sit down. The captain is speaking on the intercom. Thank you.",
+
+  s2b: "Ground control to the ramp team. The mechanics are inspecting the life vests at the moment. The dispatchers are closing the cargo doors right now. Remember, we always check the hydraulic systems every morning, but today we are also checking the emergency exits. Please stay clear of the parking area.",
+
+  // Section 3 — Long Listening
+  s3: "This is the daily ground report for Flight six. Every morning, our mechanics check the hydraulic systems and inspect the life vests. Flight attendants always demonstrate the oxygen mask before departure. Currently, the crew is closing the overhead bins because the passengers are boarding. Look! The captain is speaking on the intercom right now. The dispatchers are closing the cargo doors at the moment. We usually serve cold drinks during flight, but right now the crew is serving hot coffee in the galley. The passengers are sitting in their seats with their seatbelts fastened. The purser is currently teaching the safety procedures to a new crew member. Every flight, we follow the same routine, but every live action is different.",
+
+  // Section 4 — Listening Drill
+  dr1: "The flight attendant always demonstrates the oxygen mask.",
+  dr2: "Look! The crew is closing the overhead bin now.",
+  dr3: "The passengers are sitting in their seats right now.",
+  dr4: "Mechanics check the engines every morning.",
+  dr5: "The purser is serving coffee in the galley at the moment.",
+  dr6: "Cabin crew usually serve cold drinks during flight.",
+  dr7: "Listen! The captain is speaking on the intercom.",
+  dr8: "Passengers always fasten their seatbelts during turbulence.",
+  dr9: "Right now, the mechanics are inspecting the life vests.",
+  dr10: "The instructor teaches safety procedures every week.",
+  dr11: "Look! The dispatchers are closing the cargo doors.",
+  dr12: "Flight attendants speak English on international routes.",
+
+  // Section 5 — Simple vs Progressive (sentence + type)
+  sp1: "The flight attendant always demonstrates the oxygen mask.",
+  sp2: "Look! The crew is closing the overhead bin now.",
+  sp3: "The passengers are sitting in their seats at the moment.",
+  sp4: "Mechanics inspect the engines every morning.",
+  sp5: "Currently, the purser is serving coffee in the galley.",
+  sp6: "Flight attendants always check the emergency exits before departure.",
+  sp7: "Listen! The captain is speaking on the intercom.",
+  sp8: "Cabin crew usually serve cold drinks during flight.",
+  sp9: "Right now, the mechanics are inspecting the life vests.",
+  sp10: "The oxygen mask drops automatically during decompression.",
+
+  // Section 6 — Maria's Story
+  story: "Hi, I'm Maria and I'm a flight attendant for an international airline. Every morning, I check the safety equipment in the cabin. I always demonstrate the oxygen mask to passengers before takeoff. I usually serve drinks after the plane reaches cruising altitude. But today is different. Right now, we are flying through turbulence. The passengers are sitting in their seats with their seatbelts fastened. I am checking the overhead bins because some luggage is moving. My colleague is closing the overhead bins carefully. The captain is speaking on the intercom. Look! Everyone is listening to the safety announcement. We are not serving drinks right now because of the turbulence. I love my job because every flight is different. I always learn something new.",
+
+  // Section 7 — Listening Roleplay
+  rp1: "What does a flight attendant always demonstrate?",
+  rp2: "What is the crew doing right now?",
+  rp3: "What do mechanics check every morning?",
+  rp4: "What is the purser doing at the moment?",
+  rp5: "What do cabin crew usually serve during flight?",
+  rp6: "What is the captain doing now?",
+  rp7: "What do passengers always do during turbulence?",
+  rp8: "What is the crew currently serving?",
+  rp9: "What does the oxygen mask do during decompression?",
+  rp10: "What do flight attendants speak on international routes?"
+};
+
+/* ============================================================
+   AUDIO PLAYER
+   ============================================================ */
+function playAudio(key){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(AUDIOS[key]);
+  u.lang = 'en-US';
+  u.rate = 0.65;
+  u.pitch = 1;
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang === 'en-US') || voices.find(v => v.lang && v.lang.startsWith('en'));
+  if(enVoice) u.voice = enVoice;
+  window.speechSynthesis.speak(u);
+}
+function pauseAudio(){
+  if(!('speechSynthesis' in window)) return;
+  if(window.speechSynthesis.speaking && !window.speechSynthesis.paused){
+    window.speechSynthesis.pause();
+  }
+}
+window.speechSynthesis && window.speechSynthesis.getVoices();
+
+/* ============================================================
+   SOUND FX
+   ============================================================ */
+let audioCtx;
+function getCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playDing(){
+  try{
+    const ctx = getCtx();
+    [880, 1320].forEach((freq, i)=>{
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type='sine'; osc.frequency.value=freq;
+      const start=ctx.currentTime+i*0.09;
+      gain.gain.setValueAtTime(0.0001,start);
+      gain.gain.exponentialRampToValueAtTime(0.25,start+0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001,start+0.25);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start); osc.stop(start+0.28);
+    });
+  }catch(e){}
+}
+function playBuzz(){
+  try{
+    const ctx = getCtx();
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type='sawtooth'; osc.frequency.value=130;
+    const start=ctx.currentTime;
+    gain.gain.setValueAtTime(0.0001,start);
+    gain.gain.exponentialRampToValueAtTime(0.2,start+0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001,start+0.35);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(start); osc.stop(start+0.38);
+  }catch(e){}
+}
+
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+/* ============================================================
+   GLOBAL STATS
+   ============================================================ */
+const STATS = {
+  totalCorrect: 0,
+  totalWrong: 0,
+  sections: {
+    s1: { correct: 0, wrong: 0, max: 15 },
+    s2: { correct: 0, wrong: 0, max: 10 },
+    s3: { correct: 0, wrong: 0, max: 6 },
+    s4: { correct: 0, wrong: 0, max: 12 },
+    s5: { correct: 0, wrong: 0, max: 10 },
+    s6: { correct: 0, wrong: 0, max: 6 },
+    s7: { correct: 0, wrong: 0, max: 10 }
+  }
+};
+function addCorrect(sec){ STATS.totalCorrect++; STATS.sections[sec].correct++; }
+function addWrong(sec){ STATS.totalWrong++; STATS.sections[sec].wrong++; }
+
+/* ============================================================
+   SECTION 1 — COMPLETE VERB FORM
+   ============================================================ */
+const COMPLETE_DATA = [
+  { id:'c1',  audio:'c1',  type:'simple', sentence:'The flight attendant always ______ the oxygen mask.', answer:'demonstrates' },
+  { id:'c2',  audio:'c2',  type:'prog',   sentence:'Look! The crew is ______ the overhead bin now.', answer:'closing' },
+  { id:'c3',  audio:'c3',  type:'prog',   sentence:'The passengers are ______ in their seats right now.', answer:'sitting' },
+  { id:'c4',  audio:'c4',  type:'simple', sentence:'Mechanics ______ the engines every morning.', answer:'check' },
+  { id:'c5',  audio:'c5',  type:'prog',   sentence:'The purser is ______ coffee in the galley at the moment.', answer:'serving' },
+  { id:'c6',  audio:'c6',  type:'simple', sentence:'Cabin crew usually ______ cold drinks during flight.', answer:'serve' },
+  { id:'c7',  audio:'c7',  type:'prog',   sentence:'Listen! The captain is ______ on the intercom.', answer:'speaking' },
+  { id:'c8',  audio:'c8',  type:'simple', sentence:'Passengers always ______ their seatbelts during turbulence.', answer:'fasten' },
+  { id:'c9',  audio:'c9',  type:'prog',   sentence:'Right now, the mechanics are ______ the life vests.', answer:'inspecting' },
+  { id:'c10', audio:'c10', type:'simple', sentence:'The instructor ______ safety procedures every week.', answer:'teaches' },
+  { id:'c11', audio:'c11', type:'prog',   sentence:'Look! The dispatchers are ______ the cargo doors.', answer:'closing' },
+  { id:'c12', audio:'c12', type:'simple', sentence:'Flight attendants ______ English on international routes.', answer:'speak' },
+  { id:'c13', audio:'c13', type:'simple', sentence:'The oxygen mask automatically ______ during decompression.', answer:'drops' },
+  { id:'c14', audio:'c14', type:'prog',   sentence:'Currently, the crew is ______ meals to passengers.', answer:'serving' },
+  { id:'c15', audio:'c15', type:'simple', sentence:'Every flight, the crew ______ the emergency exits.', answer:'checks' }
+];
+
+const completeState = {};
+
+function buildComplete(){
+  const area = document.getElementById('completeArea');
+  area.innerHTML = COMPLETE_DATA.map((item, i) => {
+    completeState[item.id] = { attempts:0, solved:false, maxAttempts:3 };
+    const parts = item.sentence.split('______');
+    const badge = item.type === 'simple' 
+      ? '<span class="type-badge simple">Simple Present</span>' 
+      : '<span class="type-badge prog">Present Progressive</span>';
+    return `
+      <div class="complete-item" id="${item.id}">
+        <div class="audio-btn-group" style="margin-bottom:8px;">
+          <button class="audio-btn play-btn small" onclick="playAudio('${item.audio}')">🔊</button>
+          <button class="audio-btn pause-btn small" onclick="pauseAudio()">⏸</button>
+          <span style="font-weight:700;color:var(--muted);font-size:13px;margin-left:8px;">
+            Sentence ${i+1} ${badge} 
+            <span class="attempt-tag" id="${item.id}-tag">0/3 attempts</span>
+          </span>
+        </div>
+        <div class="complete-sentence">
+          ${parts[0]}<input class="blank-input" id="${item.id}-input" type="text" placeholder="type the verb...">${parts[1] || ''}
+        </div>
+        <button class="complete-check-btn" id="${item.id}-check" onclick="checkComplete('${item.id}')">Check</button>
+        <div class="complete-feedback" id="${item.id}-fb"></div>
+      </div>
+    `;
+  }).join('');
+}
+
+function checkComplete(id){
+  const state = completeState[id];
+  if(state.solved) return;
+  if(state.attempts >= state.maxAttempts) return;
+
+  const item = COMPLETE_DATA.find(x => x.id === id);
+  const input = document.getElementById(id+'-input');
+  const fb = document.getElementById(id+'-fb');
+  const tag = document.getElementById(id+'-tag');
+  const val = input.value.trim().toLowerCase();
+
+  if(val.length < 1){
+    fb.textContent = '⚠️ Please type a verb.';
+    fb.className = 'complete-feedback no';
+    return;
+  }
+
+  if(val === item.answer.toLowerCase()){
+    state.solved = true;
+    input.disabled = true;
+    input.classList.add('correct');
+    addCorrect('s1');
+    fb.textContent = `✔ Correct! The verb is "${item.answer}".`;
+    fb.className = 'complete-feedback ok';
+    playDing();
+    document.getElementById(id+'-check').disabled = true;
+    tag.textContent = '✔ Solved';
+    tag.style.color = 'var(--green)';
+    tag.style.background = '#e8f9ee';
+  } else {
+    state.attempts++;
+    addWrong('s1');
+    input.classList.add('wrong');
+    const rem = state.maxAttempts - state.attempts;
+    fb.textContent = `❌ Not correct. ${rem} attempts left.`;
+    fb.className = 'complete-feedback no';
+    playBuzz();
+    tag.textContent = state.attempts + '/3 attempts';
+    tag.style.color = 'var(--red)';
+    tag.style.background = '#fdecec';
+    setTimeout(()=>{ input.classList.remove('wrong'); }, 800);
+
+    if(state.attempts >= state.maxAttempts){
+      input.disabled = true;
+      document.getElementById(id+'-check').disabled = true;
+      tag.textContent = '❌ Max attempts (3/3)';
+      tag.className = 'attempt-tag maxed';
+      fb.textContent = `❌ Maximum attempts reached. The correct verb is: "${item.answer}"`;
+    }
+  }
+}
+
+/* ============================================================
+   SECTIONS 2 & 3 — LISTENING MCQ
+   ============================================================ */
+const LISTEN_MEDIUM = [
+  { id:'lm_a', audio:'s2a', title:'Audio A — Cabin Announcement', sub:'Safety demo and live departure actions',
+    questions:[
+      { id:'lm_a1', q:'What do flight attendants always demonstrate?',
+        options:[
+          {t:'The oxygen mask', c:true},
+          {t:'The life vest', c:false},
+          {t:'The seatbelt', c:false}
+        ]},
+      { id:'lm_a2', q:'What is the crew doing right now?',
+        options:[
+          {t:'Closing the overhead bins', c:true},
+          {t:'Serving drinks', c:false},
+          {t:'Teaching English', c:false}
+        ]},
+      { id:'lm_a3', q:'Why are the passengers asked to fasten seatbelts?',
+        options:[
+          {t:'Because they are ready for departure', c:true},
+          {t:'Because the flight is cancelled', c:false},
+          {t:'Because it is lunch time', c:false}
+        ]},
+      { id:'lm_a4', q:'Who is speaking on the intercom?',
+        options:[
+          {t:'The captain', c:true},
+          {t:'The purser', c:false},
+          {t:'The mechanic', c:false}
+        ]},
+      { id:'lm_a5', q:'What action is routine (always)?',
+        options:[
+          {t:'Demonstrate the oxygen mask', c:true},
+          {t:'Close the overhead bins right now', c:false},
+          {t:'Speak on the intercom now', c:false}
+        ]}
+    ]
+  },
+  { id:'lm_b', audio:'s2b', title:'Audio B — Ground Control Transmission', sub:'Ramp actions',
+    questions:[
+      { id:'lm_b1', q:'What are the mechanics inspecting at the moment?',
+        options:[
+          {t:'The life vests', c:true},
+          {t:'The oxygen masks', c:false},
+          {t:'The overhead bins', c:false}
+        ]},
+      { id:'lm_b2', q:'What are the dispatchers closing right now?',
+        options:[
+          {t:'The cargo doors', c:true},
+          {t:'The overhead bins', c:false},
+          {t:'The emergency exits', c:false}
+        ]},
+      { id:'lm_b3', q:'What do they always check every morning?',
+        options:[
+          {t:'The hydraulic systems', c:true},
+          {t:'The passenger seats', c:false},
+          {t:'The coffee machine', c:false}
+        ]},
+      { id:'lm_b4', q:'What are they also checking today?',
+        options:[
+          {t:'The emergency exits', c:true},
+          {t:'The cargo doors', c:false},
+          {t:'The life vests', c:false}
+        ]},
+      { id:'lm_b5', q:'What should the ramp team NOT do?',
+        options:[
+          {t:'Stay in the parking area', c:true},
+          {t:'Close the cargo doors', c:false},
+          {t:'Check the systems', c:false}
+        ]}
+    ]
+  }
+];
+
+const LISTEN_LONG = [
+  { id:'ll', audio:'s3', title:'Full Ground Report — Flight 6', sub:'Routines and live actions',
+    questions:[
+      { id:'ll_1', q:'What do mechanics check every morning?',
+        options:[
+          {t:'The hydraulic systems and life vests', c:true},
+          {t:'The overhead bins', c:false},
+          {t:'The coffee machine', c:false}
+        ]},
+      { id:'ll_2', q:'Why is the crew closing the overhead bins?',
+        options:[
+          {t:'Because the passengers are boarding', c:true},
+          {t:'Because they are broken', c:false},
+          {t:'Because it is night time', c:false}
+        ]},
+      { id:'ll_3', q:'What is the captain doing right now?',
+        options:[
+          {t:'Speaking on the intercom', c:true},
+          {t:'Serving drinks', c:false},
+          {t:'Closing the doors', c:false}
+        ]},
+      { id:'ll_4', q:'What is the crew serving right now?',
+        options:[
+          {t:'Hot coffee in the galley', c:true},
+          {t:'Cold drinks in the cabin', c:false},
+          {t:'Meals to passengers', c:false}
+        ]},
+      { id:'ll_5', q:'What are the passengers doing?',
+        options:[
+          {t:'Sitting with seatbelts fastened', c:true},
+          {t:'Standing in the aisle', c:false},
+          {t:'Opening the bins', c:false}
+        ]},
+      { id:'ll_6', q:'What is the purser teaching?',
+        options:[
+          {t:'Safety procedures to a new crew member', c:true},
+          {t:'English to passengers', c:false},
+          {t:'How to serve coffee', c:false}
+        ]}
+    ]
+  }
+];
+
+const listenState = {};
+
+function buildListening(containerId, dataList, sectionKey){
+  const container = document.getElementById(containerId);
+  container.innerHTML = dataList.map(item => {
+    const questionsHTML = item.questions.map((q, qi) => {
+      listenState[q.id] = { attempts:0, solved:false, maxAttempts:3 };
+      const shuffled = shuffle([...q.options]);
+      return `
+        <div class="question-block" id="${q.id}">
+          <div class="q-text">${qi+1}. ${q.q} <span class="attempt-tag" id="${q.id}-tag">0/3 attempts</span></div>
+          <div class="opt-grid">
+            ${shuffled.map(o => `<button class="opt-btn" onclick="checkListenMCQ('${q.id}', this, ${o.c}, '${sectionKey}')">${o.t}</button>`).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+    return `
+      <div class="lab-card">
+        <div class="audio-player-box">
+          <div class="audio-btn-group">
+            <button class="audio-btn play-btn" onclick="playAudio('${item.audio}')">🔊</button>
+            <button class="audio-btn pause-btn" onclick="pauseAudio()">⏸</button>
+          </div>
+          <div class="audio-info">
+            <h4>${item.title}</h4>
+            <p>${item.sub}</p>
+          </div>
+        </div>
+        ${questionsHTML}
+      </div>
+    `;
+  }).join('');
+}
+
+function checkListenMCQ(qid, btn, isCorrect, sec){
+  const state = listenState[qid];
+  if(state.solved) return;
+  if(state.attempts >= state.maxAttempts) return;
+
+  const block = document.getElementById(qid);
+  const tag = document.getElementById(qid+'-tag');
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+    state.solved = true;
+    addCorrect(sec);
+    playDing();
+    tag.textContent = '✔ Correct! (' + (state.attempts+1) + '/3)';
+    tag.style.color = 'var(--green)';
+    tag.style.background = '#e8f9ee';
+  } else {
+    btn.classList.add('wrong');
+    state.attempts++;
+    addWrong(sec);
+    playBuzz();
+    const rem = state.maxAttempts - state.attempts;
+    tag.textContent = state.attempts + '/3 attempts — ' + rem + ' left';
+    tag.style.color = 'var(--red)';
+    tag.style.background = '#fdecec';
+    setTimeout(()=>{ btn.classList.remove('wrong'); }, 600);
+
+    if(state.attempts >= state.maxAttempts){
+      block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+      tag.textContent = '❌ Max attempts (3/3)';
+      tag.className = 'attempt-tag maxed';
+    }
+  }
+}
+
+/* ============================================================
+   SECTION 4 — LISTENING DRILL
+   ============================================================ */
+const DRILL_DATA = [
+  { id:'dr1', audio:'dr1', options:[
+    {t:'The flight attendant always demonstrates the seatbelt.', c:false},
+    {t:'The flight attendant always demonstrates the oxygen mask.', c:true},
+    {t:'The flight attendant always demonstrates the life vest.', c:false}
+  ]},
+  { id:'dr2', audio:'dr2', options:[
+    {t:'Look! The crew is closing the life vests now.', c:false},
+    {t:'Look! The crew is closing the overhead bin now.', c:true},
+    {t:'Look! The crew is closing the cargo doors now.', c:false}
+  ]},
+  { id:'dr3', audio:'dr3', options:[
+    {t:'The passengers are standing right now.', c:false},
+    {t:'The passengers are sitting in their seats right now.', c:true},
+    {t:'The passengers are boarding right now.', c:false}
+  ]},
+  { id:'dr4', audio:'dr4', options:[
+    {t:'Mechanics check the engines every evening.', c:false},
+    {t:'Mechanics check the engines every morning.', c:true},
+    {t:'Mechanics check the engines every week.', c:false}
+  ]},
+  { id:'dr5', audio:'dr5', options:[
+    {t:'The purser is serving tea in the galley at the moment.', c:false},
+    {t:'The purser is serving coffee in the galley at the moment.', c:true},
+    {t:'The purser is serving water in the galley at the moment.', c:false}
+  ]},
+  { id:'dr6', audio:'dr6', options:[
+    {t:'Cabin crew usually serve hot meals during flight.', c:false},
+    {t:'Cabin crew usually serve cold drinks during flight.', c:true},
+    {t:'Cabin crew usually serve snacks during flight.', c:false}
+  ]},
+  { id:'dr7', audio:'dr7', options:[
+    {t:'Listen! The captain is speaking on the radio.', c:false},
+    {t:'Listen! The captain is speaking on the intercom.', c:true},
+    {t:'Listen! The captain is speaking on the phone.', c:false}
+  ]},
+  { id:'dr8', audio:'dr8', options:[
+    {t:'Passengers always fasten their jackets during turbulence.', c:false},
+    {t:'Passengers always fasten their seatbelts during turbulence.', c:true},
+    {t:'Passengers always fasten their bags during turbulence.', c:false}
+  ]},
+  { id:'dr9', audio:'dr9', options:[
+    {t:'Right now, the mechanics are inspecting the seatbelts.', c:false},
+    {t:'Right now, the mechanics are inspecting the life vests.', c:true},
+    {t:'Right now, the mechanics are inspecting the oxygen masks.', c:false}
+  ]},
+  { id:'dr10', audio:'dr10', options:[
+    {t:'The instructor teaches safety procedures every day.', c:false},
+    {t:'The instructor teaches safety procedures every week.', c:true},
+    {t:'The instructor teaches safety procedures every month.', c:false}
+  ]},
+  { id:'dr11', audio:'dr11', options:[
+    {t:'Look! The dispatchers are closing the overhead bins.', c:false},
+    {t:'Look! The dispatchers are closing the cargo doors.', c:true},
+    {t:'Look! The dispatchers are closing the emergency exits.', c:false}
+  ]},
+  { id:'dr12', audio:'dr12', options:[
+    {t:'Flight attendants speak English on domestic routes.', c:false},
+    {t:'Flight attendants speak English on international routes.', c:true},
+    {t:'Flight attendants speak English on regional routes.', c:false}
+  ]}
+];
+
+const drillState = {};
+
+function buildDrill(){
+  const area = document.getElementById('drillArea');
+  area.innerHTML = DRILL_DATA.map((item, i) => {
+    drillState[item.id] = { attempts:0, solved:false, maxAttempts:3 };
+    const shuffled = shuffle([...item.options]);
+    return `
+      <div class="question-block" id="${item.id}">
+        <div class="q-text">${i+1}. Listen and choose what you heard: <span class="attempt-tag" id="${item.id}-tag">0/3 attempts</span></div>
+        <div class="audio-btn-group" style="margin-bottom:12px;">
+          <button class="audio-btn play-btn small" onclick="playAudio('${item.audio}')">🔊</button>
+          <button class="audio-btn pause-btn small" onclick="pauseAudio()">⏸</button>
+        </div>
+        <div class="opt-grid">
+          ${shuffled.map(o => `<button class="opt-btn" onclick="checkDrill('${item.id}', this, ${o.c})">${o.t}</button>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function checkDrill(qid, btn, isCorrect){
+  const state = drillState[qid];
+  if(state.solved) return;
+  if(state.attempts >= state.maxAttempts) return;
+
+  const block = document.getElementById(qid);
+  const tag = document.getElementById(qid+'-tag');
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+    state.solved = true;
+    addCorrect('s4');
+    playDing();
+    tag.textContent = '✔ Correct! (' + (state.attempts+1) + '/3)';
+    tag.style.color = 'var(--green)';
+    tag.style.background = '#e8f9ee';
+  } else {
+    btn.classList.add('wrong');
+    state.attempts++;
+    addWrong('s4');
+    playBuzz();
+    const rem = state.maxAttempts - state.attempts;
+    tag.textContent = state.attempts + '/3 attempts — ' + rem + ' left';
+    tag.style.color = 'var(--red)';
+    tag.style.background = '#fdecec';
+    setTimeout(()=>{ btn.classList.remove('wrong'); }, 600);
+
+    if(state.attempts >= state.maxAttempts){
+      block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+      tag.textContent = '❌ Max attempts (3/3)';
+      tag.className = 'attempt-tag maxed';
+    }
+  }
+}
+
+/* ============================================================
+   SECTION 5 — SIMPLE vs PROGRESSIVE
+   ============================================================ */
+const SPTENSE_DATA = [
+  { id:'sp1',  audio:'sp1',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:true},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:false}
+  ]},
+  { id:'sp2',  audio:'sp2',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:false},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:true}
+  ]},
+  { id:'sp3',  audio:'sp3',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:false},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:true}
+  ]},
+  { id:'sp4',  audio:'sp4',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:true},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:false}
+  ]},
+  { id:'sp5',  audio:'sp5',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:false},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:true}
+  ]},
+  { id:'sp6',  audio:'sp6',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:true},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:false}
+  ]},
+  { id:'sp7',  audio:'sp7',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:false},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:true}
+  ]},
+  { id:'sp8',  audio:'sp8',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:true},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:false}
+  ]},
+  { id:'sp9',  audio:'sp9',  options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:false},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:true}
+  ]},
+  { id:'sp10', audio:'sp10', options:[
+    {t:'🟦 ROUTINE (Simple Present)', c:true},
+    {t:'🟥 LIVE ACTION (Present Progressive)', c:false}
+  ]}
+];
+
+const spTenseState = {};
+
+function buildGoingTo(){
+  const area = document.getElementById('goingToArea');
+  area.innerHTML = SPTENSE_DATA.map((item, i) => {
+    spTenseState[item.id] = { attempts:0, solved:false, maxAttempts:3 };
+    const shuffled = shuffle([...item.options]);
+    return `
+      <div class="question-block" id="${item.id}">
+        <div class="q-text">${i+1}. Listen and choose the tense: <span class="attempt-tag" id="${item.id}-tag">0/3 attempts</span></div>
+        <div class="audio-btn-group" style="margin-bottom:12px;">
+          <button class="audio-btn play-btn small" onclick="playAudio('${item.audio}')">🔊</button>
+          <button class="audio-btn pause-btn small" onclick="pauseAudio()">⏸</button>
+        </div>
+        <div class="opt-grid">
+          ${shuffled.map(o => `<button class="opt-btn" onclick="checkGoingTo('${item.id}', this, ${o.c})">${o.t}</button>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function checkGoingTo(qid, btn, isCorrect){
+  const state = spTenseState[qid];
+  if(state.solved) return;
+  if(state.attempts >= state.maxAttempts) return;
+
+  const block = document.getElementById(qid);
+  const tag = document.getElementById(qid+'-tag');
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+    state.solved = true;
+    addCorrect('s5');
+    playDing();
+    tag.textContent = '✔ Correct! (' + (state.attempts+1) + '/3)';
+    tag.style.color = 'var(--green)';
+    tag.style.background = '#e8f9ee';
+  } else {
+    btn.classList.add('wrong');
+    state.attempts++;
+    addWrong('s5');
+    playBuzz();
+    const rem = state.maxAttempts - state.attempts;
+    tag.textContent = state.attempts + '/3 attempts — ' + rem + ' left';
+    tag.style.color = 'var(--red)';
+    tag.style.background = '#fdecec';
+    setTimeout(()=>{ btn.classList.remove('wrong'); }, 600);
+
+    if(state.attempts >= state.maxAttempts){
+      block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+      tag.textContent = '❌ Max attempts (3/3)';
+      tag.className = 'attempt-tag maxed';
+    }
+  }
+}
+
+/* ============================================================
+   SECTION 6 — MARIA'S STORY (Open Answers)
+   ============================================================ */
+const STORY_DATA = {
+  audio: 'story',
+  title: 'Maria\'s Day — Cabin Crew',
+  sub: 'Listen to Maria (flight attendant) and answer in complete sentences',
+  questions: [
+    { id:'st1',
+      q:'What does Maria always do every morning?',
+      keywords:['check','safety','equipment','cabin','morning'],
+      minKeywords:2,
+      sample:'Every morning, Maria checks the safety equipment in the cabin.'
+    },
+    { id:'st2',
+      q:'When does Maria demonstrate the oxygen mask?',
+      keywords:['demonstrate','oxygen','mask','before','takeoff','passengers'],
+      minKeywords:2,
+      sample:'She always demonstrates the oxygen mask to passengers before takeoff.'
+    },
+    { id:'st3',
+      q:'What is happening RIGHT NOW during the flight?',
+      keywords:['turbulence','flying','right now','currently'],
+      minKeywords:2,
+      sample:'Right now, they are flying through turbulence.'
+    },
+    { id:'st4',
+      q:'Why are the passengers sitting with seatbelts fastened?',
+      keywords:['turbulence','seatbelts','sitting','because','fastened'],
+      minKeywords:2,
+      sample:'Because they are flying through turbulence, so they are sitting with seatbelts fastened.'
+    },
+    { id:'st5',
+      q:'What is Maria doing right now? And why?',
+      keywords:['checking','overhead bins','luggage','moving','because'],
+      minKeywords:2,
+      sample:'Maria is checking the overhead bins because some luggage is moving.'
+    },
+    { id:'st6',
+      q:'Why is the crew NOT serving drinks right now?',
+      keywords:['not serving','turbulence','drinks','because'],
+      minKeywords:2,
+      sample:'The crew is not serving drinks right now because of the turbulence.'
+    }
+  ]
+};
+
+const storyState = {};
+
+function buildStory(){
+  const area = document.getElementById('storyArea');
+  const questionsHTML = STORY_DATA.questions.map((q, i) => {
+    storyState[q.id] = { attempts:0, solved:false, maxAttempts:3 };
+    return `
+      <div class="question-block" id="${q.id}">
+        <div class="q-text">${i+1}. ${q.q} <span class="attempt-tag" id="${q.id}-tag">0/3 attempts</span></div>
+        <textarea class="open-answer-input" id="${q.id}-input" placeholder="Write your answer in a complete sentence..."></textarea>
+        <button class="open-check-btn" id="${q.id}-check" onclick="checkStoryOpen('${q.id}')">Check Answer</button>
+        <div class="complete-feedback" id="${q.id}-fb"></div>
+      </div>
+    `;
+  }).join('');
+
+  area.innerHTML = `
+    <div class="audio-player-box">
+      <div class="audio-btn-group">
+        <button class="audio-btn play-btn" onclick="playAudio('${STORY_DATA.audio}')">🔊</button>
+        <button class="audio-btn pause-btn" onclick="pauseAudio()">⏸</button>
+      </div>
+      <div class="audio-info">
+        <h4>${STORY_DATA.title}</h4>
+        <p>${STORY_DATA.sub}</p>
+      </div>
+    </div>
+    ${questionsHTML}
+  `;
+}
+
+function checkStoryOpen(qid){
+  const state = storyState[qid];
+  if(state.solved) return;
+  if(state.attempts >= state.maxAttempts) return;
+
+  const q = STORY_DATA.questions.find(x => x.id === qid);
+  const input = document.getElementById(qid+'-input');
+  const fb = document.getElementById(qid+'-fb');
+  const tag = document.getElementById(qid+'-tag');
+  const val = input.value.trim().toLowerCase();
+
+  if(val.length < 10){
+    fb.textContent = '⚠️ Please write a complete answer (at least 10 characters).';
+    fb.className = 'complete-feedback no';
+    return;
+  }
+
+  let hits = 0;
+  q.keywords.forEach(kw => { if(val.includes(kw.toLowerCase())) hits++; });
+  const ok = hits >= q.minKeywords;
+
+  if(ok){
+    state.solved = true;
+    input.disabled = true;
+    input.classList.add('correct');
+    addCorrect('s6');
+    fb.textContent = `✔ Correct! Sample answer: "${q.sample}"`;
+    fb.className = 'complete-feedback ok';
+    playDing();
+    document.getElementById(qid+'-check').disabled = true;
+    tag.textContent = '✔ Correct!';
+    tag.style.color = 'var(--green)';
+    tag.style.background = '#e8f9ee';
+  } else {
+    state.attempts++;
+    addWrong('s6');
+    input.classList.add('wrong');
+    const rem = state.maxAttempts - state.attempts;
+    fb.textContent = `❌ Missing key concepts (${hits}/${q.minKeywords}). ${rem} attempts left.`;
+    fb.className = 'complete-feedback no';
+    playBuzz();
+    tag.textContent = state.attempts + '/3 attempts';
+    tag.style.color = 'var(--red)';
+    tag.style.background = '#fdecec';
+    setTimeout(()=>{ input.classList.remove('wrong'); }, 800);
+
+    if(state.attempts >= state.maxAttempts){
+      input.disabled = true;
+      document.getElementById(qid+'-check').disabled = true;
+      tag.textContent = '❌ Max attempts (3/3)';
+      tag.className = 'attempt-tag maxed';
+      fb.textContent = `❌ Max attempts reached. Sample: "${q.sample}"`;
+    }
+  }
+}
+
+/* ============================================================
+   SECTION 7 — LISTENING ROLEPLAY
+   ============================================================ */
+const ROLEPLAY_DATA = [
+  { id:'rp1', audio:'rp1', options:[
+    {t:'The oxygen mask.', c:true},
+    {t:'The seatbelt.', c:false},
+    {t:'The life vest.', c:false}
+  ]},
+  { id:'rp2', audio:'rp2', options:[
+    {t:'They are closing the overhead bins now.', c:true},
+    {t:'They close the bins every flight.', c:false},
+    {t:'They are serving drinks.', c:false}
+  ]},
+  { id:'rp3', audio:'rp3', options:[
+    {t:'They check the engines every morning.', c:true},
+    {t:'They are checking the engines now.', c:false},
+    {t:'They will check the engines tomorrow.', c:false}
+  ]},
+  { id:'rp4', audio:'rp4', options:[
+    {t:'The purser is serving coffee in the galley.', c:true},
+    {t:'The purser serves coffee every flight.', c:false},
+    {t:'The purser is closing the door.', c:false}
+  ]},
+  { id:'rp5', audio:'rp5', options:[
+    {t:'They usually serve cold drinks during flight.', c:true},
+    {t:'They are serving cold drinks right now.', c:false},
+    {t:'They will serve cold drinks later.', c:false}
+  ]},
+  { id:'rp6', audio:'rp6', options:[
+    {t:'The captain is speaking on the intercom right now.', c:true},
+    {t:'The captain speaks on the intercom every flight.', c:false},
+    {t:'The captain is closing the door.', c:false}
+  ]},
+  { id:'rp7', audio:'rp7', options:[
+    {t:'Passengers always fasten their seatbelts.', c:true},
+    {t:'Passengers are fastening their seatbelts now.', c:false},
+    {t:'Passengers never fasten their seatbelts.', c:false}
+  ]},
+  { id:'rp8', audio:'rp8', options:[
+    {t:'They are serving hot coffee now.', c:true},
+    {t:'They usually serve hot coffee.', c:false},
+    {t:'They never serve hot coffee.', c:false}
+  ]},
+  { id:'rp9', audio:'rp9', options:[
+    {t:'It drops automatically during decompression.', c:true},
+    {t:'It is dropping right now.', c:false},
+    {t:'It always drops before takeoff.', c:false}
+  ]},
+  { id:'rp10', audio:'rp10', options:[
+    {t:'They speak English on international routes.', c:true},
+    {t:'They are speaking English right now.', c:false},
+    {t:'They speak English in the galley.', c:false}
+  ]}
+];
+
+const roleplayState = {};
+
+function buildRoleplay(){
+  const area = document.getElementById('roleplayArea');
+  area.innerHTML = ROLEPLAY_DATA.map((item, i) => {
+    roleplayState[item.id] = { attempts:0, solved:false, maxAttempts:3 };
+    const shuffled = shuffle([...item.options]);
+    return `
+      <div class="question-block" id="${item.id}">
+        <div class="q-text">${i+1}. Listen and choose the correct response: <span class="attempt-tag" id="${item.id}-tag">0/3 attempts</span></div>
+        <div class="audio-btn-group" style="margin-bottom:12px;">
+          <button class="audio-btn play-btn small" onclick="playAudio('${item.audio}')">🔊</button>
+          <button class="audio-btn pause-btn small" onclick="pauseAudio()">⏸</button>
+        </div>
+        <div class="opt-grid">
+          ${shuffled.map(o => `<button class="opt-btn" onclick="checkRoleplay('${item.id}', this, ${o.c})">${o.t}</button>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function checkRoleplay(qid, btn, isCorrect){
+  const state = roleplayState[qid];
+  if(state.solved) return;
+  if(state.attempts >= state.maxAttempts) return;
+
+  const block = document.getElementById(qid);
+  const tag = document.getElementById(qid+'-tag');
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+    state.solved = true;
+    addCorrect('s7');
+    playDing();
+    tag.textContent = '✔ Correct! (' + (state.attempts+1) + '/3)';
+    tag.style.color = 'var(--green)';
+    tag.style.background = '#e8f9ee';
+  } else {
+    btn.classList.add('wrong');
+    state.attempts++;
+    addWrong('s7');
+    playBuzz();
+    const rem = state.maxAttempts - state.attempts;
+    tag.textContent = state.attempts + '/3 attempts — ' + rem + ' left';
+    tag.style.color = 'var(--red)';
+    tag.style.background = '#fdecec';
+    setTimeout(()=>{ btn.classList.remove('wrong'); }, 600);
+
+    if(state.attempts >= state.maxAttempts){
+      block.querySelectorAll('.opt-btn').forEach(b => { b.style.pointerEvents='none'; b.disabled=true; });
+      tag.textContent = '❌ Max attempts (3/3)';
+      tag.className = 'attempt-tag maxed';
+    }
+  }
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+const phaseBtns = document.querySelectorAll('.phase-btn');
+const phases = document.querySelectorAll('.phase');
+
+function goToPhase(n){
+  phases.forEach(p => p.classList.remove('active'));
+  phaseBtns.forEach(b => b.classList.remove('active'));
+  document.getElementById('phase'+n).classList.add('active');
+  document.querySelector(`.phase-btn[data-phase="${n}"]`).classList.add('active');
+  document.getElementById('topProgress').style.width = (n/8*100)+'%';
+  window.scrollTo({top:0, behavior:'smooth'});
+  if(n == 8) renderFinalReview();
+}
+phaseBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=> goToPhase(parseInt(btn.dataset.phase)));
+});
+
+/* ============================================================
+   FINAL REVIEW
+   ============================================================ */
+function renderFinalReview(){
+  const totalAttempts = STATS.totalCorrect + STATS.totalWrong;
+  const pct = totalAttempts > 0 ? Math.round((STATS.totalCorrect/totalAttempts)*100) : 0;
+  const passed = pct >= 80;
+
+  let medal = '🥉', label = 'Keep practicing Flight 6!';
+  if(pct >= 90){ medal = '🥇'; label = 'Excellent! Flight 6 Mastery!'; }
+  else if(pct >= 80){ medal = '🥈'; label = 'Great job! Flight 6 achieved!'; }
+  else { medal = '🥉'; label = 'Below 80%. You must repeat the entire Lab.'; }
+
+  const rows = [
+    {label:'1. Complete Verb Form', val:STATS.sections.s1.correct, max:STATS.sections.s1.max},
+    {label:'2. Medium Listening', val:STATS.sections.s2.correct, max:STATS.sections.s2.max},
+    {label:'3. Long Listening', val:STATS.sections.s3.correct, max:STATS.sections.s3.max},
+    {label:'4. Listening Drill', val:STATS.sections.s4.correct, max:STATS.sections.s4.max},
+    {label:'5. Simple vs Progressive', val:STATS.sections.s5.correct, max:STATS.sections.s5.max},
+    {label:'6. Maria\'s Story', val:STATS.sections.s6.correct, max:STATS.sections.s6.max},
+    {label:'7. Listening Roleplay', val:STATS.sections.s7.correct, max:STATS.sections.s7.max},
+  ];
+
+  let resultHTML = '';
+  if(passed){
+    resultHTML = `<div class="result-box pass">✅ <strong>PASSED!</strong> You achieved ${pct}% — above the 80% requirement. Well done, Captain!</div>`;
+  } else {
+    resultHTML = `<div class="result-box fail">❌ <strong>NOT PASSED</strong> — You achieved ${pct}%. The minimum required is 80%. You must repeat the entire Lab.</div>`;
+  }
+
+  document.getElementById('finalArea').innerHTML = `
+    <div class="final-card">
+      <div class="medal">${medal}</div>
+      <h3>Flight 6 — Complete!</h3>
+      <div class="medal-label">${label}</div>
+      <div class="final-score-big">${pct}%</div>
+      <div class="final-score-sub">✅ ${STATS.totalCorrect} correct · ❌ ${STATS.totalWrong} errors · Total attempts: ${totalAttempts}</div>
+      ${resultHTML}
+      <div class="final-breakdown">
+        ${rows.map(r => `
+          <div class="fb-row">
+            <div class="fb-label">${r.label}</div>
+            <div class="fb-bar-outer"><div class="fb-bar-inner" style="width:${r.max > 0 ? (r.val/r.max*100) : 0}%;"></div></div>
+            <div class="fb-val">${r.val}/${r.max}</div>
+          </div>
+        `).join('')}
+      </div>
+      <button class="restart-btn" onclick="location.reload()">✈️ ${passed ? 'Fly Flight 6 Again' : 'Repeat Flight 6 (Required)'}</button>
+    </div>
+  `;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+buildComplete();
+buildListening('listenMediumArea', LISTEN_MEDIUM, 's2');
+buildListening('listenLongArea', LISTEN_LONG, 's3');
+buildDrill();
+buildGoingTo();
+buildStory();
+buildRoleplay();
+goToPhase(1);
+
+setTimeout(()=>{
+  if('speechSynthesis' in window) window.speechSynthesis.getVoices();
+}, 500);
+</script>
+</body>
+</html>
